@@ -5,12 +5,15 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 import java.io.IOException;
 
-public class ServerTest {
+public class OpenAIServer {
 
     // OpenAI API key
-    private static final String API_KEY = "39baa8d480a24d73a267a78310d54433";  // API密钥
+    private static final String API_KEY = "39baa8d480a24d73a267a78310d54433";
     private static final String GPT_API_URL = "https://api.aimlapi.com/chat/completions";
 
     public static void main(String[] args) {
@@ -26,11 +29,16 @@ public class ServerTest {
                 return;
             }
 
+            // 对 prompt 进行 URL 解码
+            String decodedPrompt = URLDecoder.decode(prompt, StandardCharsets.UTF_8.toString());
+            System.out.println("收到的 prompt: " + decodedPrompt);
+
             try {
-                String gptResponse = callGPTAPI(prompt);
+                String gptResponse = callGPTAPI(decodedPrompt);
                 ctx.result(gptResponse);
             } catch (IOException e) {
                 ctx.status(500).result("Error calling GPT API: " + e.getMessage());
+                System.err.println("API 调用失败: " + e.getMessage());  // 打印错误信息
             }
         });
     }
