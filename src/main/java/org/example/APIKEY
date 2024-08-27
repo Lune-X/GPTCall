@@ -1,5 +1,4 @@
 OPENAI_API_KEY = "2241a291e50d455a8e425bd205d1907c";
 39baa8d480a24d73a267a78310d54433
-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
 
 OPENAI_API_URL = "https://api.aimlapi.com/chat/completions";
